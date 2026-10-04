@@ -1,0 +1,26 @@
+# Whitelist: Vivado/Vitis generate far more than is tracked here, so
+# everything is ignored by default and only hand-edited files are re-included.
+*
+!.gitignore
+!README.md
+
+# Vivado: project file and sources (block design, IP config, constraints)
+!hw/
+!hw/sensorhub.xpr
+!hw/sensorhub.srcs/
+!hw/sensorhub.srcs/**
+
+# Hardware hand-off to Vitis
+!sensorhub_wrapper.xsa
+
+# Vitis: component settings and application sources
+!sw/
+!sw/sensorhub_platform/
+!sw/sensorhub_platform/vitis-comp.json
+!sw/freertos_webserver/
+!sw/freertos_webserver/vitis-comp.json
+!sw/freertos_webserver/src/
+!sw/freertos_webserver/src/**
+sw/freertos_webserver/src/compile_commands.json
+
+
