@@ -1,8 +1,10 @@
 
+#include <string.h>
 #include <include/lwip/err.h>
 #include <include/lwip/sys.h>
 #include <lwip/netif.h>
 #include <projdefs.h>
+#include <xstatus.h>
 #include "FreeRTOS.h"
 #include "task.h"
 #include "xil_printf.h"
@@ -13,29 +15,27 @@
 #include "netif/xadapter.h"
 #include "lwip/apps/httpd.h"
 #include "lwip/tcpip.h"
+#include "xgpio.h"
 
 extern XTtcPs_Config XTtcPs_ConfigTable[];
 // this is the network interface of lwip, needs to be global and exist throughout the entire runtime
 static struct netif server_netif;
-
+static XGpio AXI_bus;
 #define THREAD_STACKSIZE 1024
-
-
-void test(void *param)
-{
-    (void)param;
-    while(1)
-    {
-        xil_printf("Hello World!\r\n");
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
-}
+// led handler and cgi table
+const char *led_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[]);
+static const tCGI cgi_table[] = {
+{ "/led.cgi", led_handler },
+};
 
 static void httpd_init_wrapper(void *ctx)
 {
 	(void)ctx;
 	httpd_init();	
+    http_set_cgi_handlers(cgi_table, sizeof(cgi_table) / sizeof(cgi_table[0]));
 }
+
+
 
 void network_init_task(void *param)
 {
@@ -93,9 +93,48 @@ void network_init_task(void *param)
 }
 
 
+const char *led_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
+{
+    (void)iIndex;
+
+    for (int i = 0; i < iNumParams; i++)
+    {
+        if (strcmp(pcParam[i], "led") != 0)
+        {
+            continue;
+        }
+
+        // value comes from the network: accept exactly one digit between 0 and 3
+        if (pcValue[i][0] < '0' || pcValue[i][0] > '3' || pcValue[i][1] != '\0')
+        {
+            xil_printf("INVALID LED VALUE: %s\r\n", pcValue[i]);
+            break;
+        }
+
+        u32 mask = 1u << (pcValue[i][0] - '0');
+        u32 state = XGpio_DiscreteRead(&AXI_bus, 1);
+        XGpio_DiscreteWrite(&AXI_bus, 1, state ^ mask);
+        break;
+    }
+
+    return "/index.html";
+}
+
+
 int main()
 {
+
     xil_printf("Hello World!\r\n");
+
+    // initializing AXI GPIO
+    if(XGpio_Initialize(&AXI_bus, XPAR_AXI_GPIO_0_BASEADDR) != XST_SUCCESS)
+    {
+        xil_printf("ERROR INITIALIZING AXI GPIO!\r\n");
+        while(1);
+    }
+    // Set bus direction to output
+    XGpio_SetDataDirection(&AXI_bus, 1, 0x0);
+    XGpio_DiscreteWrite(&AXI_bus, 1, 0xF);
     // xil_printf("TTC0: %x\r\n", XTtcPs_ConfigTable[0].BaseAddress);
     // creates the lwip initializer Task with the above defined function test
     // params: function, name, size in WORDS(1 word on this device is 4 byte), parameters so NULL for this, priority is one higher than the idle task, Reference to interact

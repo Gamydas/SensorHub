@@ -11,7 +11,7 @@ enable_language(C ASM CXX)
 # Add any compiler definitions, they will be added as extra definitions
 # Example : Adding VERBOSE=1 will pass -DVERBOSE=1 to the compiler.
 set(USER_COMPILE_DEFINITIONS
-""
+"LWIP_HTTPD_CGI=1"
 )
 
 # Undefine any previously specified compiler definitions, either built in or provided with a -D option
@@ -27,7 +27,7 @@ set(USER_UNDEFINED_SYMBOLS
 # Example 3: Adding ${CMAKE_SOURCE_DIR}/data/include to add data/include from this project.
 
 set(USER_INCLUDE_DIRECTORIES
-"../../freertos_webserver/fsdata"
+"../fsdata"
 )
 
 #Add any source below, they will be added as Compile sources.
