@@ -17,10 +17,10 @@
 !sw/
 !sw/sensorhub_platform/
 !sw/sensorhub_platform/vitis-comp.json
-!sw/freertos_webserver/
-!sw/freertos_webserver/vitis-comp.json
-!sw/freertos_webserver/src/
-!sw/freertos_webserver/src/**
-sw/freertos_webserver/src/compile_commands.json
+!sw/httpd_webserver/
+!sw/httpd_webserver/vitis-comp.json
+!sw/httpd_webserver/src/
+!sw/httpd_webserver/src/**
+sw/httpd_webserver/src/compile_commands.json
 
 
