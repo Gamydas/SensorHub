@@ -9,8 +9,9 @@
 !hw/sensorhub.xpr
 !hw/sensorhub.srcs/
 !hw/sensorhub.srcs/**
-!hw/*tcl
+!hw/*.tcl
 !hw/constraints/
+!hw/constraints/**
 # Hardware hand-off to Vitis
 !sensorhub_wrapper.xsa
 

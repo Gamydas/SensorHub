@@ -7,7 +7,7 @@ set repo_root [file dirname $script_folder]
 #### IMPORTANT DO NOT CHANGE ####
 set board "digilentinc.com:arty-z7-10:part0:1.1"
 set chip "xc7z010clg400-1"
-
+set const_master "Arty-Z7-10-Master.xdc"
 #### IMPORTANT DO NOT CHANGE ####
 
 
@@ -37,3 +37,12 @@ set_param board.repoPaths [file join $::env(HOME) .Xilinx Vivado $scripts_vivado
 create_project $project_name [file join $repo_root build] -part $chip -force 
 set_property BOARD_PART $board [current_project]
 set_property target_language $language [current_project]
+
+add_files -fileset constrs_1 [file join $repo_root hw constraints $const_master]
+
+### Source Block Design
+source [file join $script_folder bd_sensorhub.tcl]
+### Create VHDL Wrapper for bd
+make_wrapper -top -force -add [get_files sensorhub.bd]
+set_property top sensorhub_wrapper [get_filesets sources_1]
+
