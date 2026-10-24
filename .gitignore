@@ -25,3 +25,10 @@
 !sw/httpd_webserver/
 !sw/httpd_webserver/src/
 !sw/httpd_webserver/src/main.c
+
+# Location of build script
+!scripts/
+!scripts/*.sh
+# Location of Docs
+!docs/
+!
