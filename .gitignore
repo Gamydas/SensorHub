@@ -17,14 +17,18 @@
 !hw/tb/
 !hw/tb/**
 
-# Vitis: component settings and application sources
+# Vitis: build script, application source, web pages
 !sw/
-!sw/sensorhub_platform/
-!sw/sensorhub_platform/vitis-comp.json
+!sw/build.py
+!sw/web/
+!sw/web/**
 !sw/httpd_webserver/
-!sw/httpd_webserver/vitis-comp.json
 !sw/httpd_webserver/src/
-!sw/httpd_webserver/src/**
-sw/httpd_webserver/src/compile_commands.json
+!sw/httpd_webserver/src/main.c
 
-
+# Location of build script
+!scripts/
+!scripts/*.sh
+# Location of Docs
+!docs/
+!

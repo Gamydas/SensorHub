@@ -34,7 +34,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 set_param board.repoPaths [file join $::env(HOME) .Xilinx Vivado $scripts_vivado_version xhub board_store xilinx_board_store]
 
 ### Creates build directory and new .xpr project file
-create_project $project_name [file join $repo_root build] -part $chip -force 
+create_project $project_name [file join $repo_root build vivado] -part $chip -force 
 set_property BOARD_PART $board [current_project]
 set_property target_language $language [current_project]
 
@@ -51,14 +51,14 @@ set_property top sensorhub_wrapper [get_filesets sources_1]
 launch_runs synth_1 -jobs 4
 wait_on_run synth_1
 if { [get_property PROGRESS [get_runs synth_1]] ne "100%" } {
-   error "Synthesis failed, see [file join $repo_root build $project_name.runs synth_1 runme.log]"
+   error "Synthesis failed, see [file join $repo_root build vivado $project_name.runs synth_1 runme.log]"
 }
 
 ### Implementation up to and including bitstream
 launch_runs impl_1 -to_step write_bitstream -jobs 4
 wait_on_run impl_1
 if { [get_property PROGRESS [get_runs impl_1]] ne "100%" } {
-   error "Implementation failed, see [file join $repo_root build $project_name.runs impl_1 runme.log]"
+   error "Implementation failed, see [file join $repo_root build vivado $project_name.runs impl_1 runme.log]"
 }
 
 ### creates .xsa file
