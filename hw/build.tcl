@@ -46,3 +46,17 @@ source [file join $script_folder bd_sensorhub.tcl]
 make_wrapper -top -force -add [get_files sensorhub.bd]
 set_property top sensorhub_wrapper [get_filesets sources_1]
 
+
+### Synthesis
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+if { [get_property PROGRESS [get_runs synth_1]] ne "100%" } {
+   error "Synthesis failed, see [file join $repo_root build $project_name.runs synth_1 runme.log]"
+}
+
+### Implementation up to and including bitstream
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+if { [get_property PROGRESS [get_runs impl_1]] ne "100%" } {
+   error "Implementation failed, see [file join $repo_root build $project_name.runs impl_1 runme.log]"
+}
