@@ -1,46 +1,23 @@
-<html>
-<head><title>lwIP - A Lightweight TCP/IP Stack</title></head>
-<body bgcolor="white" text="black">
-
-    <table width="100%">
-      <tr valign="top"><td width="80">
-	  <a href="http://www.sics.se/"><img src="/img/sics.gif"
-	  border="0" alt="SICS logo" title="SICS logo"></a>
-	</td><td width="500">
-	  <h1>lwIP - A Lightweight TCP/IP Stack</h1>
-	  <p>
-	    The web page you are watching was served by a simple web
-	    server running on top of the lightweight TCP/IP stack <a
-	    href="http://www.sics.se/~adam/lwip/">lwIP</a>.
-	  </p>
-	  <p>
-	    lwIP is an open source implementation of the TCP/IP
-	    protocol suite that was originally written by <a
-	    href="http://www.sics.se/~adam/lwip/">Adam Dunkels
-	    of the Swedish Institute of Computer Science</a> but now is
-	    being actively developed by a team of developers
-	    distributed world-wide. Since it's release, lwIP has
-	    spurred a lot of interest and has been ported to several
-	    platforms and operating systems. lwIP can be used either
-	    with or without an underlying OS.
-	  </p>
-	  <p>
-	    The focus of the lwIP TCP/IP implementation is to reduce
-	    the RAM usage while still having a full scale TCP. This
-	    makes lwIP suitable for use in embedded systems with tens
-	    of kilobytes of free RAM and room for around 40 kilobytes
-	    of code ROM.
-	  </p>
-	  <p>
-	    More information about lwIP can be found at the lwIP
-	    homepage at <a
-	    href="http://savannah.nongnu.org/projects/lwip/">http://savannah.nongnu.org/projects/lwip/</a>
-	    or at the lwIP wiki at <a
-	    href="http://lwip.wikia.com/">http://lwip.wikia.com/</a>.
-	  </p>
-	</td><td>
-	  &nbsp;
-	</td></tr>
-      </table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SensorHub</title>
+<style>
+  body { font-family: sans-serif; margin: 2em; }
+  button { font-size: 1.2em; padding: 0.6em 1.2em; margin: 0.3em; }
+</style>
+</head>
+<body>
+<h1>SensorHub</h1>
+<p>Toggle board LEDs</p>
+<!-- GET /led.cgi?led=N; the CGI handler toggles LD<N> and answers with this page again -->
+<form action="/led.cgi" method="get">
+  <button type="submit" name="led" value="0">LED0</button>
+  <button type="submit" name="led" value="1">LED1</button>
+  <button type="submit" name="led" value="2">LED2</button>
+  <button type="submit" name="led" value="3">LED3</button>
+</form>
 </body>
 </html>
