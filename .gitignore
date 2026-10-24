@@ -4,14 +4,18 @@
 !.gitignore
 !README.md
 
-# Vivado: project file and sources (block design, IP config, constraints)
+# Vivado: build script, constraints file and xsa file
 !hw/
-!hw/sensorhub.xpr
-!hw/sensorhub.srcs/
-!hw/sensorhub.srcs/**
-
+!hw/*.tcl
+!hw/constraints/
+!hw/constraints/**
 # Hardware hand-off to Vitis
-!sensorhub_wrapper.xsa
+!hw/sensorhub.xsa
+# self written HDL & Testbenches
+!hw/hdl/
+!hw/hdl/**
+!hw/tb/
+!hw/tb/**
 
 # Vitis: component settings and application sources
 !sw/
