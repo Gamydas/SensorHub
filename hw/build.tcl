@@ -60,3 +60,6 @@ wait_on_run impl_1
 if { [get_property PROGRESS [get_runs impl_1]] ne "100%" } {
    error "Implementation failed, see [file join $repo_root build $project_name.runs impl_1 runme.log]"
 }
+
+### creates .xsa file
+write_hw_platform -fixed -force -include_bit [file join $repo_root hw ${project_name}.xsa]
